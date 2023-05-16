@@ -1,0 +1,5 @@
+fn main(){
+	let a : i32 = 1;	//u32 - unsigned int
+	let b : i32 = 2;	//f32 - float
+	let x = a + b;
+}

@@ -1,0 +1,173 @@
+#[derive(Debug, PartialEq, Clone, Default)]
+
+struct CzasTrwania {
+	w_sekundach: u64
+}
+
+/*
+impl CzasTrwania {
+	w_sek(s: u64) -> CzasTrwania {
+		CzasTrwania{w_sekundach: s}
+	}
+	w_min(m: u64) -> CzasTrwania {
+		CzasTrwania{w_sekundach: n*60}
+	}
+}
+*/
+
+struct CzasTrwaniaBuilder {
+	ct : CzasTrwania,
+}
+
+impl CzasTrwaniaBuilder {
+	
+	fn new() -> CzasTrwaniaBuilder {
+		CzasTrwaniaBuilder {
+			ct: CzasTrwania {w_sekundach: 0}
+		}
+	}
+
+	fn sek(mut self, s: u64) -> CzasTrwaniaBuilder {
+		self.ct.w_sekundach += s;
+		self
+	}
+
+	fn min(mut self, m: u64) -> CzasTrwaniaBuilder {
+		self.ct.w_sekundach += m*60;
+		self
+	}
+
+	fn godz(mut self, g: u64) -> CzasTrwaniaBuilder {
+		self.ct.w_sekundach += g*60*60;
+		self
+	}
+
+	fn dni(mut self, d: u64) -> CzasTrwaniaBuilder {
+		self.ct.w_sekundach += d*60*60*24;
+		self
+	}
+
+	fn build(self) -> CzasTrwania {
+		self.ct
+	}
+}
+
+fn main() {
+	//let a = CzasTrwania::w_sek(10);
+	//let b = CzasTrwania::w_min(3);
+	//let c = CzasTrwania::w_d_g_m_s_ms(3, 10, 13, 46, 234);
+
+	let a = CzasTrwaniaBuilder::new().sek(10).build();
+	let b = CzasTrwaniaBuilder::new().min(3).build();
+	let c = CzasTrwaniaBuilder::new()
+		.dni(3)
+		.godz(10)
+		.min(13)
+		.sek(46)
+		.build();
+	let d = CzasTrwaniaBuilder::new()
+		.dni(3)
+		.sek(6)
+		.build();
+
+	println!("{:?}", a);
+	println!("{:?}", b);
+	println!("{:?}", c);
+	println!("{:?}", d);
+}
+
+==============================================================
+
+/*
+Komendy:
+	ZmienKolor(nowy_kolor),
+	Przesun(punkt),
+	Wyczysc(),
+*/
+
+enum RodzajKomendy {
+	ZmianaKoloru,
+	Przesunięcie,
+	Wyczyszczenie,
+}
+
+#[derive(Debug, PartialEq, PartialOrd, Clone)]
+enum Kolor {
+	Czarny,
+	Czerwony,
+	Bialy,
+	Zielony,
+}
+
+/*
+struct Komenda {
+	rodzaj_komendy: RodzajKomendy,
+	kolor: Option<Kolor>,
+	punkt: Option<(f32, f32)>,
+}
+*/
+
+#[derive(Debug, PartialEq, PartialOrd, Clone)]
+enum Komenda {
+	ZmienKolor(Kolor),
+	Przesun(f32, f32),
+	Wyczysc,
+}
+
+fn main() {
+	/*
+	println!("{:?}", RodzajKomendy::ZmianaKoloru);	
+	println!("{:?}", RodzajKomendy::ZmianaKoloru < RodzajKomendy::Wyczyszczenie);
+	//true(wcześniej w kolejności)
+	println!("{:?}", RodzajKomendy::ZmianaKoloru as u8 + RodzajKomendy::Wyczyszczenie as u8);
+	//2(rzutowanie na numer w kolejności)
+	*/
+
+	println!("{:?}", Komenda::ZmienKolor(Czerwony));
+	println!("{:?}", Komenda::ZmienKolor(Czerwony) < Komenda::Wyczysc);
+
+	let k = Czarny;
+	if k == Czerwony {
+		println!("CZERWONY");
+	} else {
+		println!("NIE CZERWONY");
+	}
+
+	let x = Komenda::Przesun(1.5, -10.0);
+	if x == Komenda::Przesun(-1.5, -10.0) {
+		println!("PRZESUNIECIE");
+	} else {
+		println!("NIE PRZESUNIECIE");
+	}
+
+	match k {
+		Kolor::Czerwony => {
+			println!("CZERWONY");
+		}
+		_=> {
+			println!("NIE CZERWONY");	// dla wszystkiego innego
+		}
+	}
+	// porównuje wartości i wykonuje dla nich czynność - switch case
+
+	match x {
+		Komenda::ZmienKolor(_) => {
+			println!("zmiana koloru");
+		}
+		Komenda::Przesun(_, _) => {
+			println!("Przeuniecie");
+		}
+		Komenda::Wyczysc => {
+			println!("Czyszczenie");
+		}
+	}
+}	
+
+===========================================
+
+C = struct { a: A, b: B};
+C = A x B - iloczyn kartezjański
+
+
+D = enum {a: A, b: B};
+D = A u B

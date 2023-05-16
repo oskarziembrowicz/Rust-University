@@ -1,0 +1,102 @@
+zaliczenie: wejściówki + obecność + praca na zajęciach
+
+=============================================
+fn main(){
+	let a = true;	//bool
+	let b = false;
+
+	println!("{}", a && b);
+	println!("{}", a || b);
+	println!("{}", !b);
+}
+=============================================
+fn main(){
+	let a = 'x';
+	let b = 'c';
+	let c : i128 = 1378_2873_2398;
+	let d = 0xfa;
+	let e = 0o172;
+	let f = 0b10101_1111;
+	let g = b'a';		//unicode
+}
+=============================================
+fn main(){
+	let a = 10;
+	let b = 20;
+	while a < b {
+		a += 1;
+		if a == 15 {
+			continue;
+		}
+		if a == 17 {
+			break;
+		}
+		println!("{}", a);
+	}
+
+	loop {
+		a += 1;
+		if a == 15 {
+			continue;
+		}
+		if a == 17 {
+			break;
+		}
+		println!("{}", a);
+	}
+
+	if a > b {
+		println!("większe");
+	} else if a < b {
+		println!("mniejsze");
+	} else {
+		println!("równe");
+	}
+}
+==========================================
+fn main(){
+	let mut a = 10;
+
+	println!("{}", if a > 0 { "dodatnie" } else { "niedodatnie" });
+
+	a = if a % 2 == 2 {		//'if' w Rustcie jest wyrażeniem
+		a/2
+	} else {
+		let tmp = 3*a;
+		tmp = 1
+	};
+	println!("{:?}", a);
+}
+==========================================
+fn nwd(a : i32, b : i32) -> i32 {
+	if a == 0 {
+		b
+	} else if b == 0 {
+		a
+	} else if b > a {
+		nwd(b%a, a)
+	} else {
+		nwd(a%b, b)
+	}
+}
+
+fn main(){
+	println!("{}", nwd(100, 30));
+}
+===========================================
+fn main(){
+	let mut a = 10;
+	let b = 20;
+	let x = while a < b {
+		if a >= b {
+			break a;
+		}
+		if a < b {
+			break a;
+		}
+		a += 1;
+		println!("{}", a);
+	};
+	println!("{:?}", x)
+	// break a można wykożystać tylko w loop, ale nie w while
+}

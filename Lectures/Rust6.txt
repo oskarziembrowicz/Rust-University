@@ -1,0 +1,69 @@
+fn podnies_do_kwadratu(n: i32) -> i32{
+	n*n
+}
+
+fn main(){
+	let x = 0..;
+	let v: Vec<_> = (1..=10).map(podnies_do_kwadratu).collect();	//wykonuje to dla każdego elementu
+	println!("{:?}", v);
+}
+
+funkcje =/= domknięcia
+
+domknięcie:
+|n| n*n
+
+np: .map(|n| n * n)
+
+...map(|n| n + 9);
+
+let k = 9;
+...map(|n| n + k);	//to też działa
+
+
+let v: Vec<_> = (1..=10).filter(|n| n % 10 == 1).collect;	//filtruje elementy dla których zachodzi prawda
+
+(1..=10).sum();	- sumuje elementy
+(1..=10).reduce(|acc, x| acc + x);		- wykonuje działanie na wyniku
+							poprzedniej iteracji i kolejnym elementcie
+reduce może się nie powieść dla pustego iteratora
+
+(1..=10).fold(0, |acc, x| acc + x);		- działa jak reduce() ale zakłada początkową wartośc akumulatora
+
+.find(|n| n % 6 == 0 && n % 15 == 0);	- szuka pierwszego elementu i zwraca typ Option
+.rfind()	- działa tak samo, ale od tyłu
+
+(1..=110).take_while(|n| n % 10 != 5).collect()		- działa jak filter,
+									ale przerywa przy pierwszym niepowodzeniu
+(1..=10).skip_while(|n| n % 10 != 5).collect()		- pomija wszystko gdzie warunek jest spełniony
+
+(1..).map(|x| 1.0/(x as f64)).enumerate().find(|x| x..1 < 0.03)
+.enumerate() - indeksuje elementy
+
+(10..20).all(|x| x > 0) - sprawdza czy wszystkie elementy spełniają warunek
+.any() - sprawdza czy którykolwiek element spełnia warunek
+
+let v: Vec<_> = (1..10).map(|x| println!("{:?}", x)).collect();	- to zadziała, ale v będzie mieć puste nawiasy
+(1..10).map(|x| println!("{:?}", x)).collect::<Vec<_>>(); - to również zadziała(notacja "turbofish")
+(1..10).for_each(|x| println!("{:?}", x)); - to będzie także działaś
+
+
+Wektory:
+let v1 = Vec::new();		- tworzenie nowego wektora
+v1.push('x');	- dodawanie elementu do wektora
+v1.capacity()	- pojemność wektora
+v1.pop()		- usuwanie ostatniego elementu wektora(zwraca ten element w typie Option)
+
+let v2 = Vec::<char>::with_capacity(100);	- tworzenie wektora o określonym rozmiarze
+
+let v3 = vec![3; 5];	- tworzy wektor o rozmiarze 5 wypełniony trójkami
+
+let v4 = vec![3, 32523, 43, 22, 12345, 5];	- tworzy wektor o podanych elementach
+
+v1 < v2	- porównuje ze soba kolejne elementy do pierwszej różnej od siebie pary
+
+można też porównać ze sobą krotki na podobnej zasadzie
+
+v1.resize(10, -7);	- zmienia wielkość wektora i wypełnia nowe pola drugą wartością
+
+v1.append(&mut v2);		- PRZENOSI elementy z jednego wektora do drugiego

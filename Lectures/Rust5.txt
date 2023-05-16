@@ -1,0 +1,41 @@
+fn main() {
+	for z in 0..9{		//iterator zakresu
+		println!("{}",z);
+	}
+}
+
+iteratory:
+(0..=9).step_by(2) (co drugi element)
+(0..5).chain(50..55) - łączenie szeregowe
+(0..5).zip("buteleczka".chars()) - łączenie równoległe
+.iter - zamienia zbór w iterator
+.collect - zamienia iterator w zbiór
+
+krotka ma ustaloną długość, a jej elementy mogą być równych typów
+dostęp do elementu krotki: z.0, z.1 itd
+
+for z in "buteleczka".chars().take(5) - .take(5) bierze 5 pierwszych elementów
+"text".char().max()/.min() - ostatni/pierwszy element
+
+"buteleczka".bytes().sum() - program spanikuje - overflow
+[1, 2, 4].iter().sum() - zsumuje elementy
+
+fn fun1() -> Result<i32, BladWejsciaWyjscia> {}	- funkcja zwracająca liczbę, ale może jej sie nie udać
+fn fun2() -> Result<i32, BladParsowania> {}
+fn fun3() -> Option<i32> {}
+
+let x = Some('x');
+let y: Option<char> = None;	zmienne typu option
+
+metody na option:
+.is_some()
+.is_none()	- wartości logiczne
+.unwrap()		- rozpakuj
+.unwrap_or('?')	- rozpakuj lub...
+.unwrap_or_default()	- rozpakuj lub zwróć wartość domyślną - pustą
+.expect("spodziewam sie znaku") - działa jak unwrap, ale daje komunika
+x.and(y) - jeśli oba istnieją to zwróci drugi
+x.or(y) - zwróci None jeśli oba są None, w przeciwnym razie ten pierwszy
+x.xor(or) - analogicznie ale dla xora
+
+znak zapytania na końcu linijki - próbuje rozpakować, jeśli jest None, to zwraca z funkcji None - w zasadzie działa jak wyjątek

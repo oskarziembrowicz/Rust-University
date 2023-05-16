@@ -1,0 +1,61 @@
+W Ruście nie ma dziedziczenia
+
+
+[#derive(Debug, PartialEq, PartialOrd, Clone)]	// Debug pozwala wyświetlać struktury, PertialEq pozwala częściowo porównac struktury, PartialOrd - częściowy porządek, Clone - ustawia domyślną akcję z przenoszenia na kopiowanie
+struct Punkt3D {
+	x: f64,
+	y: f64,
+	z: f64,
+}
+
+impl Punkt3D {
+	fn norma(&self) -> f64 {	// zaznaczamy pożyczkę
+		(self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
+	}
+	fn na_osi_x(x: f64) {
+		Punkt3D {
+			x: x,
+			y: 0.0,
+			z: 0.0,
+		}
+	}
+}
+
+fn main() {
+	let mut p1 = Punkt3D {
+		x: 4.3,
+		z: -2.5,
+		y: 3.5,
+	};
+
+	println!("{:?}", p1); //":?" - spróbuj wyświetlić
+
+	let p2 = Punkt3D {
+		z: 47.5,
+		..p1		// co wpisane zostaw, resztę przepisz z p1
+	};
+	println!("{:?}", p2);
+	p1.x = 34.12;
+	println!("{:?}", p1);
+	println!("{:?}", p1 == p2);
+	println!("{:?}", p1 < p2);
+	//PartialOrd wymaga PartialEq
+
+	let p3 = p1;	//tak można
+	let p4 = p1;	//a tak już nie, bo nie jest to kopiowanie, tylko przenoszenie(chyba że clone)
+
+	println!("{:?}", p1.norma());
+	println!("{:?}", Punkt3D::norma(&p1));
+	println!("{:?}", p1);
+
+	let p3 = Punkt3D::na_osi_x(3.1);
+
+	let w = vec1[
+		None,
+		Some(p1.clone()),
+		Some(p3.clone()),
+		None,
+		Some(Punkt3D::na_osi_x(-9.0)),
+	];
+	println!("{:?}", w);
+}

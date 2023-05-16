@@ -1,0 +1,22 @@
+[] - tablica jako wycinek pamięci
+
+nie można przeciążać funkcji!!!
+
+jeśli zmienna przekracza obszar pamięci(w talbicy), to na wyjściu mamy Some(zmienna)
+
+.unwrap (rozpakowauje Some())
+.unwrap_or (rozpakowuje jeśli się da, a w przeciwnym razie przyjmuje domyślną wartość)
+
+String::new(); - stworzenie nowego stringa
+String::from("Text"); - stworzenie nowego stringa
+"Text".to_string(); - stworzenie nowego stringa
+
+w Rust nie ma indeksowania stringów
+w Rust nie ma wyjątków
+
+.push_str("text") - append
+
+text.get(1..3) - weź przedział stringa
+
+result wystawia: "ok" i "error"
+option wystawia: "some" i "none"
