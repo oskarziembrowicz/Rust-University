@@ -1,0 +1,126 @@
+#[derive(Clone, Copy, PartialEq, Debug)]	//mała wielkość - kopiowanie nic nie zepsuje
+pub enum ZawartoscPola {
+	Puste, Kolko, Krzyzyk
+}
+
+#[cfg(test)]
+mod rests {
+
+}
+
+//=================================================
+
+use crate zawartosc_pola::ZawartoscPola;
+
+#[derive()]
+pub enum Wynik {
+	Remis, Kolko, Krzyzyk, GraNiezakonczona
+}
+
+impl Wynik {
+	pub fn wygrana(z: ZawartoscPola) -> Wynik {
+		match z {
+			ZawartoscPola::Kolko => Wynik::Kolko,
+			ZawartoscPola::Krzyzyk => Wynik::Krzyzyk,
+			ZawartoscPola::Puste => panic!("Wygrana pola Pustego niedopuszczalna"),
+		}
+	}
+}
+
+#[cfg(test)]
+mod rests {
+
+	use crate::zawartosc_pola::ZawartoscPola;
+	use super::Wynik;
+
+	#[test]
+	fn test1() {
+		assert_eq!(Wynik::wygrana(ZawartoscPola::Kolko), Wynik::Kolko);
+	}
+
+	#[test]
+	#[should_panic]
+	fn test2() {
+		Wynik::wygrana(ZawartoscPola::Puste);
+	}
+}
+
+//=================================================
+
+use crate::zawartosc_pola::ZawartoscPola;
+use crate::wynik::Wynik;
+
+type WspolrzednePola = (usize, usize);
+
+pub struct Plansza {
+	dane: Vec<Vec<ZawartoscPola>>;
+}
+
+impl Plansza {
+	
+	pub fn new() -> Plansza {
+		Plansza {
+			dane: vec![vec![ZawartoscPola::Puste; 3]; 3]
+		}
+	}
+
+	pub fn zawartosc_pola(&self, wsp: WspolrzednePola) -> ZawartoscPola {
+		self.dane[wsp.0][wsp.1]
+	}
+
+	pub fn wykonaj_ruch(&mut self, wsp: WspolrzednePola, z: ZawartoscPola){
+		self.dane[wsp.0][wsp.1] = z;
+	}
+
+	pub fn ruch_poprawny(&self, wsp: WspolrzednePola) -> bool {
+		self.dane[wsp.0][wsp.1] == ZawartoscPola::Puste
+	}
+
+	pub fn wynik(&self) -> Wynik {
+		if self.zawartosc_pola(0,0) == self.zawartosc_pola(1,1) and
+		self.zawartosc_pola(1,1) == self.zawartosc_pola(2,2) and
+		self.zawartosc_pola(0, 0) != ZawartoscPola::Puste {
+			retrun Wynik::wygrana(self.zawartosc_pola(0, 0));
+		}
+	}
+}
+
+#[cfg(test)]
+mod tests {
+	use super::Plansza;
+	use create::zawartosc_pola::ZawartoscPola;
+	use crate::
+
+	#[test]
+	fn test1() {
+		let mut p = Plansza::new();
+		assert_eq!()
+	}
+}
+
+//=========================================================================
+
+use crate::plansza::Plansza;
+use crate::zawartosc_pola::ZawartoscPola;
+
+fn gra(pion_startowy: ZawartoscPola, gracz1: &mut dyn Gracz, gracz2: &mut dyn Gracz) {
+	let mut biezacy_gracz = pion_startowy;
+	let mut plansza = Plansza::new();
+	loop {
+		wyswietl_plansze(&plansza);
+		let wspolrzedne_ruchu = spytaj_o_ruch(biezacy_gracz);
+		if plansza.ruch_poprawny(wspolrzedne_ruchu) {
+			plansza.wykonaj_ruch(wspolrzedne_ruchu, bierzacy_gracz);
+			komunikat_o_poprawnym_ruchu(wspolrzedne_ruchu, bierzacy_gracz);
+			bierzacy_gracz.zmien_gracza();
+		} else {
+			komunikat_o_niepoprawnym_ruchu(wspolrzedne_ruchu, bierzacy_gracz);
+		}
+		if plansza.wynik() != Wynik::GraNiezakonczona {
+			break;
+		}
+		
+	}
+	wyswietl_plansze(plansza);
+	komunikat_o_wyniku(plansza, wynik());
+}
